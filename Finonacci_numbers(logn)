@@ -1,0 +1,86 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+typedef long double ld;
+#define pii pair<ll, ll>
+#define vi vector < ll >
+#define vpi vector <pair <ll , ll > >
+
+#define ndl "\n"
+#define pb push_back
+#define ppb pop_back
+#define mp make_pair
+#define lb lower_bound
+#define ub upper_bound
+#define F first
+#define S second
+#define T third
+#define all(a) (a).begin(), (a).end()
+#define scan(arr, n)   for (ll INPUT = 0; INPUT < n; INPUT++) cin >> arr[INPUT];
+#define sz(a) (ll)((a).size())
+
+const ll INF = 1e18;
+const ll mod = 1e9 + 7;
+const ll MAX = 1000005; // 100100
+/*-------------------------------------------------------------------*/
+
+vector<vi> unity(){
+    vector<vi> mat(2, vi(2, 0));
+    mat[0][0] = mat[1][1] = 1;
+    return mat;
+}
+
+vector<vi> first_unity(){
+    vector<vi> mat(2, vi(2, 1));
+    mat[0][0] = 0;
+    return mat;
+}
+
+vector<vi> multiply(vector<vi> mata, vector<vi> matb){
+    vector<vi> mat(2, vi(2, 0));
+    mat[0][0] = (mata[0][0]*matb[0][0] + mata[0][1]*matb[1][0]) % mod;
+    mat[0][1] = (mata[0][0]*matb[0][1] + mata[0][1]*matb[1][1]) % mod;
+    mat[1][0] = (mata[1][0]*matb[0][0] + mata[1][1]*matb[1][0]) % mod;
+    mat[1][1] = (mata[1][0]*matb[0][1] + mata[1][1]*matb[1][1]) % mod;
+    return mat;
+}
+
+/*
+[f(n), f(n-1)] = [f(1), f(0)] * [[0 1][1 1]]
+*/
+
+vector<vi> power(ll n){
+    if(n == 0)
+        return unity();
+    vector<vi> mat = power(n / 2);
+    mat = multiply(mat, mat);
+    if(n & 1)
+        return multiply(first_unity(), mat);
+    return mat;
+}
+
+ll fib(ll n){
+    vector<vi> mat = power(n);
+    return mat[1][0];
+}
+
+void solve(){
+    ll n;
+    cin >> n;
+    ll res = fib(n);
+    cout << res << ndl;   
+}
+
+int main(){
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+
+
+    ll t = 1;
+    // cin >> t;
+    while (t--)
+        solve();
+
+    return 0;
+}
