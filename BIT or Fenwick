@@ -1,0 +1,42 @@
+// Fenwick Tree && Binary Indexed Tree
+template<class T>
+struct BIT{
+    int n;
+    vector<T> tree;
+
+    BIT(int __n) : n(__n + 1){
+        tree = vector<T>(n, 0);
+    }
+
+    BIT(const vector<T> &a, int __n) : n(__n + 1){
+        tree.resize(n);
+        for(int i = 1 ; i < n ; i++) {
+            pointupdate(i + 1, a[i - 1]);
+        }
+    }
+
+    T make(int i){
+        return tree[i];
+    }
+
+    // i & -i => minimum set Bit
+    void pointupdate(int i, long long delta){
+        while(i < n){
+            tree[i] += delta;
+            i += (i & -i);
+        }
+    }
+
+    T prefSum(int i){
+        T Sum = 0;
+        while(i > 0){
+            Sum += tree[i];
+            i -= (i & -i);
+        }
+        return Sum;
+    }
+
+    T rangeSum(int i, int j){
+        return (prefSum(j) - prefSum(i-1));
+    }
+};
