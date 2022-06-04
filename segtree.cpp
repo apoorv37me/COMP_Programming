@@ -14,13 +14,14 @@ class segtree{
         }
         else{
             int m = l + (n - l) / 2;
-            left = new segTree(a, l, m);
-            right = new segTree(a, m+1, n);
+            left = new segtree;
+            right = new segtree;
+            left -> build(a, l, m);
+            right -> build(a, l + 1, n);
             recalc();
         }
     }
-    // just to make segTree with 0 value everywhere
-    void build(int l, int n){
+    void build(int l, int n){ // just to make segTree with 0 vertices
         lmost = l;
         rmost = n;
         if(l==n){
@@ -28,8 +29,10 @@ class segtree{
         }
         else{
             int m = l + (n - l) / 2;
-            left = new segTree(l, m);
-            right = new segTree(m+1, n);
+            left = new segtree;
+            right = new segtree;
+            left -> build(l, m);
+            right -> build(l + 1, n);
             recalc();
         }
     }
